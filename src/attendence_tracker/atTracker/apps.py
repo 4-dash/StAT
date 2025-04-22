@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class AttrackerConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "atTracker"
+    name = "attendence_tracker.atTracker"
