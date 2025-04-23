@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 
-{% block title %}{{stud.firstname}} {{stud.surname}}{% endblock title %}
+{% block title %}{{st.firstname}} {{st.surname}}{% endblock title %}
 
 {% block content %}
 
 
-Name:       {{stud.firstname}}<br>
-Surname:    {{stud.surname}}<br>
-Attendence: {{stud.attendance_count}}<br>
+Name:       {{st.firstname}}<br>
+Surname:    {{st.surname}}<br>
+Attendence: {{st.attendence_count}}<br>
+
+<br>
+<a href="{% url 'edit_student' id=id%}">Edit</a>
 
 <br>
 <a href="{% url 'home' %}">Back to Home</a>

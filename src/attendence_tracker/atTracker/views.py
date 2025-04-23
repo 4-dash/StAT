@@ -1,15 +1,15 @@
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, get_object_or_404
 from .models import Student
 from django.http import HttpResponseRedirect
-from .forms import AddStudent
+from .forms import AddStudent, EditStudent
 
 def home(request) :
     students = Student.objects.all()
     return render(request, 'home.html', {"students" : students})
 
 def student(request, id) :
-    stud = Student.objects.get(id=id)
-    return render(request, 'student.html', {"stud" : stud})
+    st = get_object_or_404(Student, id=id)
+    return render(request, 'student.html', {"st" : st, "id" : id})
 
 def add_student(request) :
     if request.method == "POST" :
@@ -20,7 +20,7 @@ def add_student(request) :
                 st = Student.objects.create(
                     firstname=form.cleaned_data["firstname"],
                     surname=form.cleaned_data["surname"],
-                    attendance_count=0
+                    attendence_count=0
                 )
                 return HttpResponseRedirect(reverse('student', args=[st.id]))
             except Exception :      
@@ -28,3 +28,18 @@ def add_student(request) :
     
     form = AddStudent()
     return render(request, "add_stud.html", {"form": form, "warning": ""})
+
+
+def edit_student(request, id) :
+    if request.method == "POST" :
+        st = get_object_or_404(Student, id=id)
+        form = EditStudent(request.POST, instance = st)
+
+        if form.is_valid() :
+            form.save()
+            return HttpResponseRedirect(reverse("student", args=[id]))
+                
+
+    st = get_object_or_404(Student, id=id)
+    form = EditStudent(initial={"firstname": st.firstname, "surname": st.surname, "attendence_count": st.attendence_count})
+    return render(request, "edit_stud.html", {"form" : form, "st" : st, "id" : id})
