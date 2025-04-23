@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+    <a href="{% url 'add_student' %}">Add Student</a>
+    
+    
+    <ul>
+        {% for st in students %}
+            <li>
+                <a href="{% url 'student' id=st.id %}">{{st.firstname}} {{st.surname}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    
+
+{% endblock content %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}{{stud.firstname}} {{stud.surname}}{% endblock title %}
+
+{% block content %}
+
+
+Name:       {{stud.firstname}}<br>
+Surname:    {{stud.surname}}<br>
+Attendence: {{stud.attendance_count}}<br>
+
+<br>
+<a href="{% url 'home' %}">Back to Home</a>
+
+{% endblock content %}
