@@ -10,9 +10,6 @@ Surname:    {{st.surname}}<br>
 Attendence: {{st.attendence_count}}<br>
 
 <br>
-<a href="{% url 'edit_student' id=id%}">Edit</a>
-
-<br>
-<a href="{% url 'home' %}">Back to Home</a>
+<a href="{% url 'edit_student' id=id %}">Edit</a>
 
 {% endblock content %}

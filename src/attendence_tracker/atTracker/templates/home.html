@@ -3,17 +3,35 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-    <a href="{% url 'add_student' %}">Add Student</a>
-    
-    
-    <ul>
-        {% for st in students %}
-            <li>
-                <a href="{% url 'student' id=st.id %}">{{st.firstname}} {{st.surname}}</a>
-            </li>
-        {% endfor %}
-    </ul>
 
-    
+    <article class="d-flex">
+        <table class="table table-sm table-striped table-hover caption-top mbse-5">
+            <caption>Students List</caption>
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Surname</th>
+                    <th scope="col">Attendence</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for st in students %}
+
+                    <tr class="position-relative">
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{st.firstname}}</td>
+                        <td>{{st.surname}}</td>
+                        <td>{{st.attendence_count}}</td>
+                        <td><a class="link-dark" href="{% url 'edit_student' id=st.id %}">edit</a></td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </article>
 
 {% endblock content %}
