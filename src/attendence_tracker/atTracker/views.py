@@ -24,12 +24,18 @@ def add_student(request) :
                     surname=form.cleaned_data["surname"],
                     attendence_count=0
                 )
-                return HttpResponseRedirect(reverse('student', args=[st.id]))
-            except Exception :      
-                return render(request, "add_stud.html", {"form": form, "warning": "An error occured. Student might not have been added."})
+                messages.success(request, f"Student {st.firstname} {st.surname} has been added.")
+
+                return HttpResponseRedirect(reverse('edit_student', args=[st.id]))
+
+            except Exception :
+                messages.error(request, "An error has occured!")     
+                return redirect("home")
+        else :
+            messages.error(request, "Given data is not vaild!")
     
     form = AddStudent()
-    return render(request, "add_stud.html", {"form": form, "warning": ""})
+    return render(request, "add_stud.html", {"form": form})
 
 
 def edit_student(request, id) :
@@ -39,7 +45,10 @@ def edit_student(request, id) :
 
         if form.is_valid() :
             form.save()
-            return HttpResponseRedirect(reverse("student", args=[id]))
+            messages.success(request, f"Student {st.firstname} {st.surname} has been modified.")
+            return HttpResponseRedirect(reverse("home"))
+        else :
+            messages.error(request, "Given data is not vaild!")
                 
 
     st = get_object_or_404(Student, id=id)

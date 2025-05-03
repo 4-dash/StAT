@@ -4,6 +4,17 @@
 
 {% block content %}
 
+{% if messages %}
+    <br>
+    <div class="alert alert-success" role="alert">
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
 <form action="{% url 'edit_student' id=id%}" method="post">
     {% csrf_token %}
 
