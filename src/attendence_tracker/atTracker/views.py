@@ -1,13 +1,15 @@
-from django.shortcuts import render, reverse, get_object_or_404
+from django.shortcuts import render, reverse, get_object_or_404, redirect
 from .models import Student
 from django.http import HttpResponseRedirect
 from .forms import AddStudent, EditStudent
+from django.contrib import messages
 
 def home(request) :
     students = Student.objects.all()
     return render(request, 'home.html', {"students" : students})
 
 def student(request, id) :
+    # not in major use
     st = get_object_or_404(Student, id=id)
     return render(request, 'student.html', {"st" : st, "id" : id})
 
@@ -43,3 +45,15 @@ def edit_student(request, id) :
     st = get_object_or_404(Student, id=id)
     form = EditStudent(initial={"firstname": st.firstname, "surname": st.surname, "attendence_count": st.attendence_count})
     return render(request, "edit_stud.html", {"form" : form, "st" : st, "id" : id})
+
+
+
+def del_student(request, id) :
+    if request.method == "POST" :
+        st = get_object_or_404(Student, id=id)
+        name, surname = st.firstname, st.surname
+        st.delete()
+        messages.success(request, f"Student {name} {surname} was deleted.")
+        return redirect(home)
+
+    return HttpResponseRedirect(reverse("edit_student", args=[id]))

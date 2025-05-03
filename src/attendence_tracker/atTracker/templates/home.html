@@ -3,6 +3,18 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
+        
+    {% if messages %}
+    <br>
+    <div class="alert alert-success" role="alert">
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
 
     <article class="d-flex">
         <table class="table table-sm table-striped table-hover caption-top mbse-5">
